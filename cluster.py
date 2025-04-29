@@ -14,7 +14,7 @@ def lk(x, x_, k, s):
 
 def Ln(L_, n, x_, x, y):
     L = 0
-
+    
     for i in range(len(x) - 1):
         if x[i] == x_:
             L = y[i]
@@ -128,7 +128,7 @@ while ans == "incorrect":
             ans = "correct"
             break
         elif xj > (x0 + 0.2) or xj < (x0 - 0.2):
-            break
+            continue
         else:
             c = 1
     if c == 1:
