@@ -1,4 +1,3 @@
-✨polina✨, [06.05.2025 8:39]
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
