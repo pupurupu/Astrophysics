@@ -1,3 +1,4 @@
+✨polina✨, [06.05.2025 8:39]
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,7 +37,7 @@ def Ln(L_, n, x_, x, y):
 def coefficient_reg_inv_analit(x, y):
     size = len(x)
     numer_w1 = size * sum(x[i] * y[i] for i in range(0, size)) - sum(x) * sum(y)
-    denom = size * sum((x[i]) ** 2 for i in range(0, size)) - (sum(x)) ** 2
+    denom = size * sum((x[i])  2 for i in range(0, size)) - (sum(x))  2
     numer_w0 = -sum(x) * sum(x[i] * y[i] for i in range(0, size)) + sum((x[i]) ** 2 for i in range(0, size)) * sum(y)
 
     w1 = numer_w1 / denom
@@ -95,8 +96,9 @@ for i in range(3, len(data)):
             B_V.append(float(data['Mag B'][i]) - float(data['Mag V'][i]))
             U_B.append(float(data['Mag U'][i]) - float(data['Mag B'][i]))
             count += 1
-            if (1.3 <= (float(data['Mag B'][i]) - float(data['Mag V'][i])) <= 2.17 and
-                    1 <= (float(data['Mag U'][i]) - float(data['Mag B'][i])) <= 2):
+            if (0.5 <= (float(data['Mag B'][i]) - float(data['Mag V'][i])) <= 1 and 
+                -0.5 <= (float(data['Mag U'][i]) - float(data['Mag B'][i])) <= 2#):
+                and float(data['Mag V'][i]) != 21.484):
                 V_int.append(float(data['Mag V'][i]))
                 B_V_int.append(float(data['Mag B'][i]) - float(data['Mag V'][i]))
                 U_B_int.append(float(data['Mag U'][i]) - float(data['Mag B'][i]))
@@ -125,17 +127,18 @@ while ans == "incorrect":
     c = 0
     for xj in x_igr:
         if (x0 - 0.02) <= xj <= (x0 + 0.02) and (y0 - 0.01) <= y_igr[np.where(x_igr == xj)[0][0]] <= (y0 + 0.01):
-            ans = "correct"
+            if x0 < 0.25:
+                ans = "correct"
             break
         elif xj > (x0 + 0.2) or xj < (x0 - 0.2):
             continue
         else:
             c = 1
     if c == 1:
-        x0 = x0 - 0.02
-        y0 = y0 - 0.72 * 0.02
+        x0 = x0 - 0.01
+        y0 = y0 - 0.72 * 0.01
     count += 1
-    if count == 15:
+    if count == 500:
         break
 x2 = x0
 y2 = y0
@@ -167,8 +170,8 @@ R = 10**lgR
 print("R = ", R)
 
 plt.plot(x_, L_, color='red', label = "ГП")
-plt.scatter(B_V_int, U_B_int, color='yellow', label = "до сдвига")
-plt.scatter(B_V_int-(x1-x2), U_B_int-(y1-y2), color='pink', label = "после сдвига")
+plt.scatter(B_V_int, U_B_int, color='green', label = "до сдвига")
+plt.scatter(B_V_int-(x1-x2), U_B_int-(y1-y2), color='purple', label = "после сдвига")
 plt.plot(x, y, color="orange", label = "средняя линия звезд \n до сдвига")
 plt.plot([x1, x2], [y1, y2], color="black", label = "линия смещения")
 plt.gca().invert_yaxis()
@@ -180,8 +183,8 @@ plt.ylabel("U_B")
 plt.show()
 
 plt.plot(x_, M_, color='red', label = "ГП")
-plt.scatter(B_V_int, V_int, color='yellow', label = "до сдвига")
-plt.scatter(B_V_int - E_B_V, V_int, color='pink', label = "после сдвига")
+plt.scatter(B_V_int, V_int, color='green', label = "до сдвига")
+plt.scatter(B_V_int - E_B_V, V_int, color='purple', label = "после сдвига")
 plt.plot(xV, yV, color="orange", label = "средняя линия звезд \n до сдвига")
 plt.plot([x1, x0_v], [y0_v, y0_v], color="black", label = "линия смещения")
 plt.plot([x0_v, x0_v], [y0_v, np.average(v_v)], color="black", label = "линия смещения")
